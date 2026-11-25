@@ -46,6 +46,9 @@ export default function Menu() {
                 <Link className="nav-link" href="/historial">
                   Mi historial
                 </Link>
+                <Link href="/quienes-somos" className="nav-link">
+                  Quiénes somos
+                </Link>
               </>
             )}
             {user?.rol === "admin" && (
@@ -60,6 +63,9 @@ export default function Menu() {
                 </Link>
                 <Link className="nav-link" href="/estadisticas">
                   Estadísticas públicas
+                </Link>
+                <Link href="/quienes-somos" className="nav-link">
+                  Quiénes somos
                 </Link>
                 <Link className="btn btn-aqua btn-sm px-3" href="/registro">
                   Crear cuenta

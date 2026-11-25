@@ -125,7 +125,7 @@ function Card() {
           anchorX="left"
           anchorY="middle"
         >
-          JUAN RESTREPO
+          JUAN CHAMORRO
         </Text>
 
         {/* VENCIMIENTO */}
