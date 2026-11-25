@@ -1,0 +1,83 @@
+swagger: "2.0"
+info:
+  title: CrediCheck API
+  description: API REST para registro, autenticación y evaluación orientativa de perfil financiero.
+  version: "1.0.0"
+host: localhost:5000
+basePath: /
+schemes: [http]
+consumes: [application/json]
+produces: [application/json]
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: "Escribe: Bearer <token JWT>"
+paths:
+  /api/health:
+    get:
+      summary: Estado de la API
+      responses:
+        "200": {description: Servicio disponible}
+  /api/registro:
+    post:
+      summary: Registrar cuenta cliente
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required: [nombre, correo, password]
+            properties:
+              nombre: {type: string}
+              correo: {type: string}
+              password: {type: string, minLength: 10}
+      responses:
+        "201": {description: Cuenta creada}
+        "409": {description: Correo duplicado}
+  /api/login:
+    post:
+      summary: Iniciar sesión y obtener JWT
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required: [correo, password]
+            properties:
+              correo: {type: string}
+              password: {type: string}
+      responses:
+        "200": {description: Token JWT y perfil}
+        "401": {description: Credenciales incorrectas}
+  /api/evaluaciones:
+    post:
+      summary: Crear evaluación de perfil
+      security: [{Bearer: []}]
+      responses:
+        "201": {description: Evaluación creada}
+        "401": {description: Token requerido o vencido}
+    get:
+      summary: Consultar historial propio
+      security: [{Bearer: []}]
+      responses:
+        "200": {description: Historial del usuario}
+        "401": {description: Token requerido o vencido}
+  /api/admin/resumen:
+    get:
+      summary: Consultar indicadores administrativos
+      security: [{Bearer: []}]
+      responses:
+        "200": {description: Resumen para administrador}
+        "401": {description: Token requerido}
+        "403": {description: Rol insuficiente}
+  /api/admin/evaluaciones:
+    get:
+      summary: Consultar evaluaciones recientes
+      security: [{Bearer: []}]
+      responses:
+        "200": {description: Lista de evaluaciones}
+        "403": {description: Rol insuficiente}
